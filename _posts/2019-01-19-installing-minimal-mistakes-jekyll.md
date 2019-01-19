@@ -3,6 +3,11 @@ layout: single
 title:  "Setting up jekyll with minimal-mistakes theme"
 date:   2019-01-19 08:22:36 +1100
 categories: jekyll theme
+excerpt: "And you thought setting up a blog would be simple?"
+header:
+  overlay_image: /assets/images/frustration.jpg
+  overlay_filter: 0.5
+  caption: "Photo credit: ErikaWittlieb"
 ---
 Ok so we want to make a new jekyll blog. Cool! First things first, have `jekyll` installed in a local scope and add `gems` to your `PATH` in `~/.bashrc` etc etc. 
 
