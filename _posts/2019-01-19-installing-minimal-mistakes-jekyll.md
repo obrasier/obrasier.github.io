@@ -293,7 +293,7 @@ sed -i '/remote_theme/d' _local_development.yml
 
 # change the commented line to have the theme setting
 # c for change line
-sed -i '/minimal-mistakes-jekyll"/c\theme                    : "minimal-mistakes-jekyll"' _local_development.yml
+sed -i '/"minimal-mistakes-jekyll"/c\theme                    : "minimal-mistakes-jekyll"' _local_development.yml
 
 bundle exec jekyll serve --config _local_development.yml
 ```
