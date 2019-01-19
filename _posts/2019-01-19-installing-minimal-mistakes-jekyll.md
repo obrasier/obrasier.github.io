@@ -206,7 +206,16 @@ I care about not wanting to punch stuff, so I might just do that. Plus, I'll wan
 
 The internet is not that good just yet that we can treat everything is on a LAN, not in Australia anyway.
 
-So what's a nerd gonna do? It's obvious right, let's fork the `minimal-mistakes` repo, run all the files locally, and not set a theme at all!
+So what's a nerd gonna do? 
+
+There are 2 options:
+1. Fork the theme repo and keep all the files locally, lol
+2. Figure out some other way...
+
+Option 2 is correct, but let's see how hard option 1 is.
+
+### Option 1
+Let's fork and clone:
 
 ... *insert long waiting period here for the files to download* ...
 
@@ -263,7 +272,10 @@ what happens if I delete the version?
 
 So that works, but *really*!? I have to maintain a fork just to get my site to build quickly?
 
-There must be a better way, and there is. We can pass in a local configuration file
+There must be a better way, and there is. 
+
+### Option 2
+We can pass in a local configuration file
 
 ```bash
 bundle exec jekyll serve --config CONFIG_FILE
