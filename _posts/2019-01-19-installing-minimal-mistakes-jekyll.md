@@ -26,7 +26,7 @@ I have a couple of goals, which I think *should* be simple:
 - host on Github Pages
 - be able to build it locally
 
-Ok, now we have the enviroment setup, let's install the `minimal-mistakes` theme... oh, there's 3 ways to install it. 
+Ok, now we have the enviroment setup, let's install the (`minimal-mistakes`)[https://mmistakes.github.io/minimal-mistakes/] theme... oh, there's 3 ways to install it. 
 
 I like the _idea_ of installing it remotely, let's do that.
 
