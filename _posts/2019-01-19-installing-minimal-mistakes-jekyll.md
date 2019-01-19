@@ -306,7 +306,7 @@ But, the quick start guide wasn't written poorly, the ability to host things in 
 
 But... it doesn't work. 
 
-My internet is too shit to use a remote theme, Github Pages can't use the gemfile method for reasons, so either I host somewhere else (I considered it), so I just fork the theme which specifies a version for a build and have to randomly change a value in order for it to work the way I want.
+My internet is too shit to use a remote theme, Github Pages can't use the gemfile method for reasons, so I have to hack around with a simple shell script just to build my website locally. Workable? Sure. Optimal for *anyone* just to set up a blog using Jekyll? No way.
 
 Conclusion: everything is broken and everything is hard. I don't know how to fix, but t1his is just one tiny example it just not working for no reason.
 
