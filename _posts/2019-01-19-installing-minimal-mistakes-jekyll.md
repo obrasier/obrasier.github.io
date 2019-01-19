@@ -288,12 +288,13 @@ This lets us pass in a separate config for a remote and local build. Let's write
 cp _config.yml _local_development.yml
 
 # delete the line with remote_theme setting
+# d for delete line
 sed -i '/remote_theme/d' _local_development.yml
 
 # change the commented line to have the theme setting
+# c for change line
 sed -i '/minimal-mistakes-jekyll"/c\theme                    : "minimal-mistakes-jekyll"' _local_development.yml
 
-# run the server
 bundle exec jekyll serve --config _local_development.yml
 ```
 Yes I know it is a bit of a cheap hack and I'll have to be careful not to use the full theme name blah blah blah, it works. You can deal.
