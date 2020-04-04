@@ -20,8 +20,7 @@ Okay, so I assume you have a Rasberry Pi 4. This [guide actually works](https://
 Here's a list of things we need to do:
 * Install a fake x server to pretend we have a window
 * Install the right version of java we need
-* Get the Raspberry Pi logging into on boot
-
+* Install Processing and Processing.py
 
 We're going to install `xvfb` which stands for X video frame buffer. Processing needs a window to output, but we don't have a window, so we can create a fake one.
 
@@ -60,9 +59,7 @@ We need version [8u202](https://www.oracle.com/java/technologies/javase/javase8-
 
 I needed to make an account just to download it, fuck you Oracle. 🖕
 
-Download, extract, add to `PATH`
-
-On windows powershell, yes my work computer is Windows, and powershell is not terrible. Sometimes.
+I downloaded it on Windows, yes my work computer is Windows, and powershell is not terrible. Sometimes. Copy to the pi:
 
 ```bash
 > scp jdk-8u202-linux-arm32-vfp-hflt.tar.gz pi@raspberrypi.local:/home/pi
@@ -136,4 +133,3 @@ It's running!
 🎉🎉🎉
 
 Now, there's no real point to generating real-time video if we can't pass variables to it. Not sure how to do that... Did I just waste all that time? Lol. That's for the next installment!
-
