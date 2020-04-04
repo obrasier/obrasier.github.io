@@ -15,7 +15,7 @@ Okay! So I bought a Rasberry Pi 4 to work on on a video project, and I couldn't 
 
 Why would anyone want to do this? Well, I have ideas on generating real-time video, and I'm too lazy to do maths to do it properly, so why not run a huge bloated java application to do it for me? Yeah!
 
-Okay, so I assume you have a Rasberry Pi 4. This [guide actually works](https://github.com/processing/processing/wiki/Running-without-a-Display) to get you started, even thought it says it doesn't.
+Okay, so I assume you have a Rasberry Pi 4. This [guide actually works](https://github.com/processing/processing/wiki/Running-without-a-Display) even thought it says it doesn't. That'll get us started.
 
 Here's a list of things we need to do:
 * Install a fake x server to pretend we have a window
@@ -28,7 +28,7 @@ We're going to install `xvfb` which stands for X video frame buffer. Processing 
 sudo apt install xvfb libxrender1 libxtst6 libxi6 
 ```
 
-Now we've got that, let's make a file called `/home/pi/bin/autostart`:
+Now we've got that, let's make a file called `/home/pi/bin/start_xvfb`:
 
 ```bash
 sudo Xvfb :1 -screen 0 1024x768x24 </dev/null &
@@ -36,7 +36,7 @@ export DISPLAY=":1"
 ```
 Make it executable:
 ```bash
-pi@raspberrypi:~/bin $ chmod +x autostart
+pi@raspberrypi:~/bin $ chmod +x start_xvfb
 ```
 
 Then change `/etc/rc.local` to run that script on startup:
@@ -106,7 +106,7 @@ pi@raspberrypi:~ $ tar -xzvf processing.py-linux32.tgz
 
 The file we want is the file `processing-py.jar` located in the directory `processing.py/processing.py-<version>-linux32/`
 
-To test it, let's my a dumb script that just prints numbers
+To test it, let's my a dumb script that just prints `"It's running"`, and draws an image that you can never see...
 ```python
 def setup():
     size(150, 84)
