@@ -46,7 +46,7 @@ _IP=$(hostname -I) || true
 if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
-/home/pi/bin/autostart
+/home/pi/bin/start_xvfb
 
 exit 0
 ```
@@ -74,7 +74,7 @@ pi@raspberrypi:~ $ sudo cp -r jdk1.8.0_202/ /usr/local/
 
 Then add this line to you `~/.bashrc` file:
 ```bash
-export PATH=/usr/local/jdk1.8.0_202/bin:$PATH"
+export PATH=/usr/local/jdk1.8.0_202/bin:$PATH
 ```
 Adding it to the front of `PATH` means it'll take precedence over the 50 other java versions you have installed. Let's test that shit works:
 ```bash
