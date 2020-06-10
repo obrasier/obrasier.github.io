@@ -446,6 +446,21 @@ print(condition_innings[columns_to_print])
     121  Australia    92   65.2  v England    The Oval 1890-08-11
     123  Australia   102   60.2  v England    The Oval 1890-08-11
 
-Whoa, after a strong start, Australia have by far the longest losing streak. Sad, pandas gave me sad pandas. It's so much more than the 
+Whoa, after a strong start, Australia have by far the longest losing streak. Sad, pandas gave me sad pandas. It's so much more than twice as bad as the next worst. Here's the full list:
+
+                team  under_200
+    0        Australia         21
+    110   South Africa         12
+    5461    Bangladesh         12
+    1          England          8
+    677    New Zealand          7
+    631    West Indies          6
+    791          India          5
+    1281      Pakistan          5
+    3352     Sri Lanka          4
+    4328      Zimbabwe          4
+    6390  ICC World XI          2
+    8390   Afghanistan          2
+    8375       Ireland          1
 
 So it works! We answered the queries, but it's a bit bloody clunky. I'm going to just submit this post now, but I will edit it. Because I'm sure I should have been using [df.query](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html) this whole time to make it easier to write generic queries instead of the filtering I've been doing. 
