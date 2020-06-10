@@ -356,7 +356,7 @@ Here's the relevent part:
 self.baseurl = "http://stats.espncricinfo.com/ci/engine/stats/index.html?class=1;orderby=start;page=%s;template=results;type=team;view=innings"
 ```
 
-The score is not a nice integer of runs, so we can do maths on things with a `/`, so I added a runs column.
+The score is not a nice integer of runs - we can do maths on things with a `/`, so I added a runs column.
 
 ```python
 # the runs are the number before the /, if it exists
