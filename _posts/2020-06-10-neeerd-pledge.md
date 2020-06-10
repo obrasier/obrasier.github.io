@@ -168,12 +168,9 @@ Holy fuck. This can't be fucking real.
 
 It fucking is!
 
-Whoa, mind is actually blow. 
-
-
+Whoa, mind is actually blown. Okay, let's just make sure our data is all good, what does it take to caluculate the number of ducks a player got in their career? So the number of ducks is the number they scored 0 and were also dismissed, so we can do a simple calculate to figure out how many times Don Bradman got a duck:
 
 ```python
-
 def get_all_player_stats(player):
     # return the entire dataframe but filtered for that player
     return df.loc[df['innings_player'] == player]
