@@ -168,6 +168,10 @@ Holy fuck. This can't be fucking real.
 
 It fucking is!
 
+Whoa, mind is actually blow. 
+
+
+
 ```python
 
 def get_all_player_stats(player):
@@ -184,13 +188,14 @@ print(f"The Don got {num_ducks('DG Bradman')} ducks")
     The Don got 7 ducks
 
 
+Okay, so we've done that for the simple stuff. Now we're going to start answering the real questions, that stats that statsguru doens't want you to know. Won't let you know. Actively withholding important cricketing knowledge from you! Let's get started! 
+
+First we want to get some 
+
 ```python
 def get_all_player_stats(player, data):
     # return the entire dataframe but filtered for that player
     return data[data['innings_player'] == player]
-
-def get_all_teams_stats(team, data):
-    return data[data['team'] == team]
 
 def num_matches(test, col, test_num, df_data, greater, individual=True):
     # https://stackoverflow.com/questions/40068261/pandas-dataframe-find-longest-consecutive-rows-with-a-certain-condition
@@ -200,31 +205,40 @@ def num_matches(test, col, test_num, df_data, greater, individual=True):
     data = df_data.copy()
     data = data[data[col] != np.nan]
 
-    # this is bad, I get it
+    # we set a condition_true column for all data that matches our condition
+    # TODO: investigate df.query for this
     if greater:
         data['condition_true'] = np.where(data[col] > test_num, True, False)
     else:
         data['condition_true'] = np.where(data[col] < test_num, True, False)
-    if individual:
-        all_stats = get_all_player_stats(test, data)
-    else:
-        all_stats = get_all_teams_stats(test, data)
-
+    all_stats = get_all_player_stats(test, data)
+    
     # magic to find the consecutive differences, thanks internet!
+    # compare the conditions with a shifted version to find the groups
     df_bool = all_stats['condition_true'] != all_stats['condition_true'].shift()
+    # take the cumulitive sum to get the size of each group
     df_cumsum = df_bool.cumsum()
+    # grouby the size of each group (this has both match and not match)
     groups = all_stats.groupby(df_cumsum)
+
+    # get the aggregate and remove a useless column
     group_counts = groups.agg({col: ['count', 'min', 'max']})
     group_counts.columns = group_counts.columns.droplevel()
+
+    # check if it is actually a mathc
     if greater:
         group_counts = group_counts[group_counts['min'] > test_num]
     else:
         group_counts = group_counts[group_counts['max'] < test_num]
+
+    # retun the count
     max_count = group_counts['count'].max()
     return max_count
 ```
 
-So now we've got the function that gives us the number of consecutive matches. Let's run it and see how who has the most runs over 40.
+So now we've got the function that gives us the number of consecutive matches. We can use the `apply` function to apply the function to each player, like we did to get the averages. I used the `args` parameter to pass additional values to the function we're using. Swoit!
+
+This version is currently a bit bad, because it only does less than / greater than conditions. I'll fix this eventually, hopefully.
 
 ```python
 # Enter these values to match a condition
@@ -300,8 +314,7 @@ top_player = all_players.iloc[0,0]
 num, scores = num_matches_group(top_player, column, condition_number, df, greater_than, True)
 
 cols_to_print = ['innings_player', 'innings_runs_scored', 'opposition' ,'ground', 'innings_date', 
-                 'innings_minutes_batted', 'innings_balls_faced', 'innings_boundary_fours',
-                 'innings_boundary_sixes']
+                 'innings_minutes_batted', 'innings_balls_faced']
 print(scores[cols_to_print])
 ```
 
@@ -328,19 +341,7 @@ print(scores[cols_to_print])
     9489    2004-03-10                     406                  312   
     9679    2004-03-10                     239                  177   
     9798    2004-03-18                     165                  127   
-    
-           innings_boundary_fours  innings_boundary_sixes  \
-    10166                       3                       0   
-    10151                       3                       1   
-    9476                       17                       1   
-    9459                       20                       0   
-    9536                        7                       5   
-    9784                       13                       0   
-    9537                       14                       1   
-    9489                       19                       0   
-    9679                       11                       3   
-    9798                       11                       1   
-
+ 
 
 So, the innings was 2003-2004 when peak Jacques was a monster. Noice.
 
