@@ -343,7 +343,7 @@ print(scores[cols_to_print])
     9798    2004-03-18                     165                  127   
  
 
-So, the innings was 2003-2004 when peak Jacques was a monster. Noice.
+So, the innings was 2003-2004 when peak Jacques, 5 centuries in 6 fucking innings, what a monster.
 
 So that lets us get all the innings that match. It's horrible code, I know, there has to be something that does it in one line. But I want to get this out the door working, and fix the computer-science-nerd-wank later.
 
