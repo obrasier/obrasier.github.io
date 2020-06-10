@@ -3,8 +3,8 @@ layout: single
 classes: wide
 title:  "Analysing cricket statistics in pandas"
 date:   2020-04-04 10:44:36 +1100
-categories: pandas cricket nerd
-excerpt: "... how many Yak's can I shave in a day?"
+categories: pandas
+excerpt: "... how many Yak's can I shave in (several) days?"
 header:
   overlay_image: /assets/images/cricket.jpg
   overlay_filter: 0.5
@@ -39,7 +39,6 @@ find *.csv -exec sed -i '1s/.*/\L&/;1s/ /_&/' {} \;
 ```
 
 I did attempt to start this with SQL, but I found it such a pain that I decided to best tool is the one you've vaguely used before, so we're going with [pandas](https://pandas.pydata.org/). I will spare you my SQL adventure, it got a bit messy. 🍻🤢
-
 
 Okay that's it. We've done the file processing, now to load them all into jupyter. 
 
@@ -92,7 +91,6 @@ The average of a batter is the number of runs scored in their career minus the n
 
 So we can write a function for each.
 
-
 ```python
 def get_total_runs(player):
     return df.loc[df['innings_player'] == player, 'innings_runs_scored_num'].sum()
@@ -112,7 +110,6 @@ print(get_average('DG Bradman'))
 ```
 
     99.94285714285714
-
 
 Fuckn yeh boooooiiiii! 😎
 
@@ -138,17 +135,19 @@ all_players['average'] = all_players.innings_player.apply(get_average)
 ```
 
 After that we should filter out the infinite and not-a-number results
+
 ```python
 # filter out infinite and not-a-number results
 all_players.replace([np.inf, -np.inf], np.nan, inplace=True)
 all_players.dropna(inplace=True)
 ```
+
 Next we can displayer the results from highest to lowest. To reveal the best batsman of all time....
+
 ```python
 all_players.sort_values(by=['average'], ascending=False, inplace=True)
 print(all_players[:10])
 ```
-
 
           innings_player     average
     22755   KR Patterson  144.000000
@@ -228,7 +227,6 @@ def num_matches(test, col, test_num, df_data, greater, individual=True):
 So now we've got the function that gives us the number of consecutive matches. Let's run it and see how who has the most runs over 40.
 
 ```python
-
 # Enter these values to match a condition
 match_name = 'greater_40'
 column = 'innings_runs_scored_num'
@@ -293,6 +291,7 @@ def num_matches_group(test, col, test_num, df_data, greater, individual=True):
     return max_len, resulting_df
 
 ```
+
 Okay that's our messy function, I can't explain it now, but the internet helped a lot.
 
 ```python
@@ -446,6 +445,6 @@ print(condition_innings[columns_to_print])
     121  Australia    92   65.2  v England    The Oval 1890-08-11
     123  Australia   102   60.2  v England    The Oval 1890-08-11
 
-Whoa, after a strong start, Australia have by far the longest losing streak.
+Whoa, after a strong start, Australia have by far the longest losing streak. Sad, pandas gave me sad pandas. It's so much more than the 
 
 So it works! We answered the queries, but it's a bit bloody clunky. I'm going to just submit this post now, but I will edit it. Because I'm sure I should have been using [df.query](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.query.html) this whole time to make it easier to write generic queries instead of the filtering I've been doing. 
