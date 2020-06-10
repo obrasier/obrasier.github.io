@@ -11,7 +11,7 @@ header:
   caption: "Photo credit: Image by Lisa scott from Pixabay"
 ---
 
-
+*Note: you can download the jupyter notebook for this post [here](/assets/notebooks/nerdpledge_blog.ipynb) and the CSV files I used: [1](assets/csv/men_test_player_innings_stats_-_19th_century.csv) [2](assets/csv/men_test_player_innings_stats_-_20th_century.csv) [3](assets/csv/men_test_player_innings_stats_-_20th_century.csv) [4](assets/csv/all_test_innings.csv)*
 
 It's time for some [neeeeerd pledge](https://finalwordcricket.com/). I was talking to Adam and Geoff and though they run a segment called nerd pledge, I discovered they really need to up their cricket nerd stats game. So I'm here to help.
 
