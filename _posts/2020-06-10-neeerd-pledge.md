@@ -187,7 +187,9 @@ print(f"The Don got {num_ducks('DG Bradman')} ducks")
 
 Okay, so we've done that for the simple stuff. Now we're going to start answering the real questions, that stats that statsguru doens't want you to know. Won't let you know. Actively withholding important cricketing knowledge from you! Let's get started! 
 
-First we want to get some 
+So we want to set up a function that get the *number of times a condition matches in a row*. I'm using `np.where(condition)` to add an additional column to mark all the times the condition we want occurs. Then, we can compare that version with a shifted version, and see where they are not equal, to see where a change is.
+
+Then use the *cumulative sum* to sum up each group. Here's the code:
 
 ```python
 def get_all_player_stats(player, data):
@@ -237,6 +239,7 @@ So now we've got the function that gives us the number of consecutive matches. W
 
 This version is currently a bit bad, because it only does less than / greater than conditions. I'll fix this eventually, hopefully.
 
+What we're doing here, is getting the number of times a player has scored more than 40 in a row.
 ```python
 # Enter these values to match a condition
 match_name = 'greater_40'
