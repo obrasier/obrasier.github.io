@@ -446,7 +446,7 @@ print(condition_innings[columns_to_print])
     121  Australia    92   65.2  v England    The Oval 1890-08-11
     123  Australia   102   60.2  v England    The Oval 1890-08-11
 
-Whoa, after a strong start, Australia have by far the longest losing streak. Sad, pandas gave me sad pandas. It's so much more than twice as bad as the next worst. Here's the full list:
+Whoa, after a strong start, Australia have by far the longest losing streak. Sad, pandas gave me sad pandas. Almost twice as bad as the next worst. Here's the full list:
 
                 team  under_200
     0        Australia         21
