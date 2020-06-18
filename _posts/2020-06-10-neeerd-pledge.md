@@ -195,6 +195,7 @@ The problem with calculating the averages above was that I was sorting the origi
 
 ```python
 def get_max_consecutive(group):
+    # thanks stackoverflow https://stackoverflow.com/a/59640568/5905582
     # this works for each player
     # first get all matches and compare with a shifted version to how many are the same in a row
     df_bool = group['criteria_match'] != group['criteria_match'].shift()
