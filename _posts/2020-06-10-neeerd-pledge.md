@@ -188,7 +188,7 @@ print(f"The Don got {num_ducks('DG Bradman')} ducks")
 
 Okay, so we've done that for the simple stuff. Now we're going to start answering the real questions, that stats that statsguru doens't want you to know. Won't let you know. Actively withholding important cricketing knowledge from you! Let's get started! 
 
-When I first did this, it took `2min 14s` to perform one query. That's not okay. With the method below I get `18.2 s` for the same query. Bonza. I'm just showing you the shiny new approach, you don't want to see the old way. Trust me.
+When I first did this, it took `2min 14s` to perform one query. That's not okay. With the method below I get `18.2 s` for the same query. Not actually as fast as I was hoping, but much better than going away to boil the kettle, come back and it's still not bloody done. Good-e-fucking-nuf mate. I'm just showing you the shiny new approach, you don't want to see the old way. Trust me.
 
 The problem with calculating the averages above was that I was sorting the original dataset by date, and not by player, then getting the individual players in a separatate dataframe. Then, for each player we were going over the whole dataframe to get the average. That way, we already have the players grouped together, and we don't need to pass over the whole dataframe each time for every player, we can just group by player which is already sorted, and then apply our function for each group. Let's give that a red hot go ay. Fucken-ay.
 
