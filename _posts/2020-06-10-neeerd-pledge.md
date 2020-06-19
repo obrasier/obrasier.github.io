@@ -60,7 +60,7 @@ There's a few things we should do before we can start processing the data.
 
 - drop the duplicate rows
 - change the type of data to the appropriate data type in each column (I *definitely* knew about this before starting the post, yep, *definitely*)
-- sort by date - which will be a handy default
+- sort by date, then innings number - to ensure all the innings are in order.
 
 ```python
 df = df.drop_duplicates()
@@ -80,7 +80,7 @@ for col in int_cols:
 
 df.innings_economy_rate = pd.to_numeric(df.innings_economy_rate, errors='coerce')
 df.innings_date = pd.to_datetime(df.innings_date, infer_datetime_format=True)
-df = df.sort_values(by=['innings_date'])
+df = df.sort_values(by=['innings_date', 'innings_number'])
 ```
 
 Okay, so now we've gotten to the point where we hoped we would have started, clean data, I guess. How do we know we haven't fucked something up? 
@@ -146,7 +146,7 @@ Next we can displayer the results from highest to lowest. To reveal the best bat
 
 ```python
 all_players.sort_values(by=['average'], ascending=False, inplace=True)
-print(all_players[:10])
+print(all_players.head(10))
 ```
 
           innings_player     average
@@ -168,17 +168,7 @@ Holy fuck. This can't be fucking real.
 
 It fucking is!
 
-Whoa, mind is actually blown. Okay, that was fun and all. But it was really fucking slow. Like, real slow: `Wall time: 1min 17s` I think I've been going about this the wrong way.
-
-
-
-```python
-df = df.sort_values(by=['innings_player', 'innings_date', 'innings_number'])
-df.reset_index(drop=True, inplace=True)
-groups = df.groupby('innings_player')
-averages = groups.apply(get_average)
-```
-
+Whoa, mind is actually blown. Okay, that was fun and all. But it was really fucking slow. Like, real slow: `Wall time: 1min 17s` I think I've been going about this the wrong way. We'll fix it later, maybe.
 
 Okay, let's just make sure our data is all good, what does it take to caluculate the number of ducks a player got in their career? So the number of ducks is the number they scored 0 and were also dismissed, so we can do a simple calculate to figure out how many times Don Bradman got a duck:
 
@@ -198,7 +188,7 @@ print(f"The Don got {num_ducks('DG Bradman')} ducks")
 
 Okay, so we've done that for the simple stuff. Now we're going to start answering the real questions, that stats that statsguru doens't want you to know. Won't let you know. Actively withholding important cricketing knowledge from you! Let's get started! 
 
-When I first did this, it took `2min 14s` to perform one query. That's not okay. With the method below I get `18.2 s` for the same query. Bonza. I'm just showing you the shiny new approach, but if you want to see my horrible slow code that you would never use, for whatever reason, it's here.
+When I first did this, it took `2min 14s` to perform one query. That's not okay. With the method below I get `18.2 s` for the same query. Bonza. I'm just showing you the shiny new approach, you don't want to see the old way. Trust me.
 
 The problem with calculating the averages above was that I was sorting the original dataset by date, and not by player, then getting the individual players in a separatate dataframe. Then, for each player we were going over the whole dataframe to get the average. That way, we already have the players grouped together, and we don't need to pass over the whole dataframe each time for every player, we can just group by player which is already sorted, and then apply our function for each group. Let's give that a red hot go ay. Fucken-ay.
 
@@ -252,7 +242,8 @@ def get_all_consecutive(criteria, data, sort_order=['innings_player', 'innings_d
     results = grp.apply(get_max_consecutive)
     return results
 ```
-Read the code comments for explanations of what each part is doing. I tried to make it clear. I'll tell you know, that section took me a four or five days on and off. For like 20 lines of code, and most of those I'd written already. What a brainfuck. 
+
+Read the code comments for explanations of what each part is doing. I tried to make it clear. I'll tell you know, that section took me a four or five days on and off. For like 20 lines of code, and most of those I'd written already. What a brainfuck.
 
 The line that runs the actual query is this function `data.eval(criteria)`, and we mark each item in our dataframe as a match or not:
 
@@ -301,7 +292,7 @@ print(results.head(10))
     S Chanderpaul  0  [144318, 145407, 145715, 145759, 145781, 14582...  
 
 
-We want more just that players and how many times that player matched that condition. We want to get the *actual* innings that the player achieved. That's what that `indexes` column is for. It's a list of the indivdidual indexes from the original dataset so we can look them up later. Let's write a function that does the whole thing, and returns the innings for only the maximum results.
+We want more just that players and how many times that player matched that condition. Like a dog hankering for a fresh bone, I can feel you chomping at the bit to get the real stats. We want to get the *actual* innings that the player achieved. That's what that `indexes` column is for. It's a list of the indivdidual indexes from the original dataset so we can look them up later. Let's write a function that does the whole thing, and returns the innings for only the maximum results.
 
 
 ```python
@@ -320,7 +311,6 @@ Then we can call the function and print only the columns we're interested in.
 
 
 ```python
-%%time
 criteria = 'innings_runs_scored_num > 40'
 max_value, results = get_most_consecutive_individual(criteria)
 print(max_value)
@@ -369,8 +359,6 @@ print(results[cols_to_print])
     133277   2004-01-16                     247              1  
     133584   2004-03-10                     239              1  
     133627   2004-03-10                     406              3  
-    CPU times: user 1min 24s, sys: 75.8 ms, total: 1min 24s
-    Wall time: 1min 24s
 
 
 The good thing about this system is, we can add as many conditions as we like. So what's the most number of matches where a player has scored over 60 and was also not_out. We can search by using the column heading and a condition as many conditions as we like (joined by `and`)
@@ -518,7 +506,7 @@ What about in a country? Let's see which bowlers have taken 3 or more wickets in
 english_grounds = ["Lord's", "Birmingham", "Manchester", "The Oval", "Sheffield", "Nottingham", "Leeds"]
 
 # this is how you can build it up programmatically, start with the beginning of the query
-criteria = '''innings_wickets_taken >= 3 and (ground == '''
+criteria = 'innings_wickets_taken >= 3 and (ground == '
 
 # this next line is tricky, have to wrap each item in double quotes ""
 criteria += ' or ground == '.join(f'"{g}"' for g in english_grounds)
@@ -588,7 +576,7 @@ values.insert(3, balls_per_over)
 
 ```
 
-Okay... that ran I the scraper from the internet required only 1 line change to actually work. Amazing.
+Okay... I the scraper from the internet and required only 1 line change to actually work. Amazing.
 
 ```bash
 $ python scraper.py
