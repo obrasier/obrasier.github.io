@@ -666,6 +666,40 @@ print(results)
 
 Holy fucking shit. For a team with the highest win record, we have by far the worst losing streak. God damn.
 
+I think we need to drill deeper into this though. Let's get all the occurances.
+
+
+```python
+criteria = 'runs < 200'
+sort_order=['team', 'start_date', 'innings']
+results = get_all_consecutive(criteria, data=all_innings.copy(), sort_order=sort_order)
+
+results.sort_values(by=['maximum'], ascending=False, inplace=True)
+print(results['maximum'])
+
+```
+
+    team           
+    Australia     0    21
+    Bangladesh    0    12
+    South Africa  0    12
+    England       0     8
+    New Zealand   0     7
+    West Indies   0     6
+    Pakistan      0     5
+    India         0     5
+                  1     5
+    Zimbabwe      0     4
+    Sri Lanka     1     4
+                  0     4
+    Afghanistan   0     2
+                  1     2
+    ICC World XI  0     2
+    Ireland       2     1
+                  0     1
+                  1     1
+    Name: maximum, dtype: int64
+
 One shortcoming of this current implementation is underneath it all I'm calling `get_max_consecutive` for each group. So we only ever discover the maximum number of matches, not all the available matches, as well as the maximum. I can probably be convinced to add this. But I've worked on this for longer than is reasonable already.
 
 Okay, extra conditions also works with teams.
@@ -679,6 +713,29 @@ print(results)
 
 ```
 
+    9
+              team score  runs  overs  balls_per_over   rpo  lead  innings result  \
+    97   Australia    42    42   37.3               4  1.66   -71        2   lost   
+    99   Australia    82    82   69.2               4  1.76  -126        4   lost   
+    100  Australia   116   116   71.2               4  2.43   116        1    won   
+    102  Australia    60    60   29.2               4  3.05   123        3    won   
+    104  Australia    80    80   90.3               4  1.32    80        1   lost   
+    106  Australia   100   100   69.2               4  2.15  -137        3   lost   
+    108  Australia    81    81   52.2               4  2.31   -91        2   lost   
+    109  Australia    70    70   31.1               4  3.36   -21        3   lost   
+    117  Australia   132   132   86.0               5  1.84   132        1   lost   
+    
+        opposition      ground start_date  all_out_flag  declared_flag  
+    97   v England      Sydney 1888-02-10             1              0  
+    99   v England      Sydney 1888-02-10             1              0  
+    100  v England      Lord's 1888-07-16             1              0  
+    102  v England      Lord's 1888-07-16             1              0  
+    104  v England    The Oval 1888-08-13             1              0  
+    106  v England    The Oval 1888-08-13             1              0  
+    108  v England  Manchester 1888-08-30             1              0  
+    109  v England  Manchester 1888-08-30             1              0  
+    117  v England      Lord's 1890-07-21             1              0  
+
 LOL. Australia really sucked in 1888. 
 
 Okay, just out of curiosity, which team was not out most in a row.
@@ -690,6 +747,41 @@ max_value, results = get_most_consecutive_team(criteria)
 print(max_value)
 print(results)
 ```
+
+    9
+                 team   score  runs  overs  balls_per_over   rpo  lead  innings  \
+    5550  New Zealand  196/1d   196   73.0               6  2.68   101        3   
+    5564  New Zealand  407/4d   407  112.2               6  3.62   303        2   
+    5654  New Zealand  287/8d   287   88.4               6  3.23  -199        2   
+    5656  New Zealand   274/6   274   57.0               6  4.80    -9        4   
+    5677  New Zealand   243/7   243  105.2               6  2.30  -315        2   
+    5682  New Zealand  534/9d   534  162.5               6  3.27   534        1   
+    5684  New Zealand  256/9d   256   71.0               6  3.60   439        3   
+    5698  New Zealand  365/9d   365   77.1               6  4.73   365        1   
+    5705  New Zealand  341/6d   341   88.0               6  3.87   209        2   
+    
+         result    opposition        ground start_date  all_out_flag  \
+    5550   draw    v Pakistan  Christchurch 2001-03-15             0   
+    5564    won    v Pakistan      Hamilton 2001-03-27             0   
+    5654   draw   v Australia      Brisbane 2001-11-08             0   
+    5656   draw   v Australia      Brisbane 2001-11-08             0   
+    5677   draw   v Australia        Hobart 2001-11-22             0   
+    5682   draw   v Australia         Perth 2001-11-30             0   
+    5684   draw   v Australia         Perth 2001-11-30             0   
+    5698    won  v Bangladesh      Hamilton 2001-12-18             0   
+    5705    won  v Bangladesh    Wellington 2001-12-26             0   
+    
+          declared_flag  
+    5550              1  
+    5564              1  
+    5654              1  
+    5656              0  
+    5677              0  
+    5682              1  
+    5684              1  
+    5698              1  
+    5705              1  
+
 
 And everyone's second favourite team, New Zealand, coming home with the goods. I'm going to leave it there. If you see something wrong with my data or if you have any features you'd like to see. Please let me know. 
 
