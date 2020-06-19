@@ -611,7 +611,7 @@ Okay, let's run the fucker and find out who scored the most innings in a row und
 
 ```python
 criteria = 'runs < 200'
-max_value ,results = get_most_consecutive_team(criteria)
+max_value, results = get_most_consecutive_team(criteria)
 print(max_value)
 print(results)
 ```
@@ -665,19 +665,6 @@ print(results)
 
 
 Holy fucking shit. For a team with the highest win record, we have by far the worst losing streak. God damn.
-
-I think we need to drill deeper into this though. Let's get all the occurances.
-
-
-```python
-criteria = 'runs < 200'
-sort_order=['team', 'start_date', 'innings']
-results = get_all_consecutive(criteria, data=all_innings.copy(), sort_order=sort_order)
-
-results.sort_values(by=['maximum'], ascending=False, inplace=True)
-print(results['maximum'])
-
-```
 
 One shortcoming of this current implementation is underneath it all I'm calling `get_max_consecutive` for each group. So we only ever discover the maximum number of matches, not all the available matches, as well as the maximum. I can probably be convinced to add this. But I've worked on this for longer than is reasonable already.
 
