@@ -2,7 +2,7 @@
 layout: single
 classes: wide
 title:  "Analysing cricket statistics in pandas"
-date:   2020-04-04 10:44:36 +1100
+date:   2020-06-10 10:44:36 +1100
 categories: pandas
 excerpt: "... how many Yak's can I shave in (several) days?"
 header:
