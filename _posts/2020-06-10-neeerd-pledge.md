@@ -693,4 +693,4 @@ print(results)
 
 And everyone's second favourite team, New Zealand, coming home with the goods. I'm going to leave it there. If you see something wrong with my data or if you have any features you'd like to see. Please let me know. 
 
-You can download the jupyter notebook of a modified version of this blog post, link at the to. I've edited it a little but if you just wanna run the code, you can pretty easily. Just google how to install `pandas` and `jupyter notebook`, I'm not your mother.
+You can download the jupyter notebook of a modified version of this blog post, link at the top. I've edited it a little but if you just wanna run the code, you can pretty easily. Just google how to install `pandas` and `jupyter notebook`, I'm not your mother.
