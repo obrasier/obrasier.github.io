@@ -247,7 +247,7 @@ Read the code comments for explanations of what each part is doing. I tried to m
 
 The line that runs the actual query is this function `data.eval(criteria)`, and we mark each item in our dataframe as a match or not:
 
-``python
+```python
 data.loc[data.eval(criteria), 'criteria_match'] = True
 data['criteria_match'].fillna(False, inplace=True)
 ```
