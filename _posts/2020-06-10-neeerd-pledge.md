@@ -700,6 +700,10 @@ print(results['maximum'])
                   1     1
     Name: maximum, dtype: int64
 
+
+... I still have no idea what that first column even is. Some indexy-thingo-maybe. Oh well, who cares, certainly not me 🤷‍♂️
+
+
 One shortcoming of this current implementation is underneath it all I'm calling `get_max_consecutive` for each group. So we only ever discover the maximum number of matches, not all the available matches, as well as the maximum. I can probably be convinced to add this. But I've worked on this for longer than is reasonable already.
 
 Okay, extra conditions also works with teams.
