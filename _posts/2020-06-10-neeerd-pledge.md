@@ -679,6 +679,8 @@ start_date = datetime.datetime(1950, 1, 1)
 end_date = datetime.datetime(1990, 1, 1)
 
 # filter by date,use & (and), and brackets for multiple pre-filtering conditions
+# if you just wanted it to be since 1950
+# filtered_data = all_innings[all_innings.start_date >= start_date]
 filtered_data = all_innings[(all_innings.start_date >= start_date) & (all_innings.start_date <= end_date)]
 criteria = 'runs < 200'
 max_value ,results = get_most_consecutive_team(criteria, data=filtered_data)
