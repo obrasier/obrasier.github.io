@@ -600,7 +600,7 @@ all_innings.runs = pd.to_numeric(all_innings.runs, errors='coerce').astype("Int6
 
 ```
 
-In fact, to do the team one, we just call the individual one but pass in the values we want.
+In fact, to do the team one, we just call the individual one but pass in the default values we want.
 
 
 ```python
@@ -669,6 +669,42 @@ print(results)
 
 
 Holy fucking shit. For a team with the highest win record, we have by far the worst losing streak. God damn.
+
+For whatever reason, maybe recency-bias, you might want to restrict your entire search-space to a particular date range. Maybe we want to find the answer to this question *between 1950 and 1990* or something. This can be done by pre-filtering the data *before* we make the query.
+
+
+```python
+# year, month, day
+start_date = datetime.datetime(1950, 1, 1)
+end_date = datetime.datetime(1990, 1, 1)
+
+# filter by date,use & (and), and brackets for multiple pre-filtering conditions
+filtered_data = all_innings[(all_innings.start_date >= start_date) & (all_innings.start_date <= end_date)]
+criteria = 'runs < 200'
+max_value ,results = get_most_consecutive_team(criteria, data=filtered_data)
+print(max_value)
+print(results)
+```
+
+    7
+                 team   score  runs  overs  balls_per_over   rpo  lead  innings  \
+    1530  New Zealand  157/9d   157   80.0               6  1.96   267        3   
+    1638  New Zealand      94    94   69.3               6  1.35  -127        2   
+    1640  New Zealand     137   137   77.3               6  1.76  -205        4   
+    1642  New Zealand      47    47   32.3               6  1.44  -222        2   
+    1643  New Zealand      74    74   50.3               6  1.46  -148        3   
+    1644  New Zealand      67    67   59.1               6  1.13    67        1   
+    1646  New Zealand     129   129  101.2               6  1.27   -71        3   
+    
+         result     opposition      ground start_date  all_out_flag  declared_flag  
+    1530    won  v West Indies    Auckland 1956-03-09             0              1  
+    1638   lost      v England  Birmingham 1958-06-05             1              0  
+    1640   lost      v England  Birmingham 1958-06-05             1              0  
+    1642   lost      v England      Lord's 1958-06-19             1              0  
+    1643   lost      v England      Lord's 1958-06-19             1              0  
+    1644   lost      v England       Leeds 1958-07-03             1              0  
+    1646   lost      v England       Leeds 1958-07-03             1              0  
+
 
 I think we need to drill deeper into this though. Let's get all the occurances.
 
