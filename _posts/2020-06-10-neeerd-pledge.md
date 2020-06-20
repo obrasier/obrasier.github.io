@@ -22,7 +22,7 @@ The problem is, writing custom queries is difficult if it's not something obviou
 
 This type of consecutive stat is actually quite a hard thing to do, sounds like a database task. This will be a ramble of my journey to answer these questions, but my goal is to have a "generic query" and then produce answer to that generic query. Okay, let's find some data!
 
-Ie downloaded the files we need from [this dataset](https://www.kaggle.com/cclayford/cricinfo-statsguru-data/data). I just run these bash commands to rename the files for easier shell handling
+I downloaded the files we need from [this dataset](https://www.kaggle.com/cclayford/cricinfo-statsguru-data/data). I just run these bash commands to rename the files for easier shell handling
 
 ```bash
 # replace space with underscores, spaces are yukky
@@ -244,7 +244,7 @@ def get_all_consecutive(criteria, data, sort_order=['innings_player', 'innings_d
     return results
 ```
 
-Read the code comments for explanations of what each part is doing. I tried to make it clear. I'll tell you know, that section took me a four or five days on and off. For like 20 lines of code, and most of those I'd written already. What a brainfuck.
+Read the code comments for explanations of what each part is doing. I tried to make it clear. I'll tell you now, that section took me a four or five days on and off. For like 20 lines of code, and most of those I'd written already. What a brainfuck.
 
 The line that runs the actual query is this function `data.eval(criteria)`, and we mark each item in our dataframe as a match or not:
 
@@ -293,7 +293,7 @@ print(results.head(10))
     S Chanderpaul  0  [144318, 145407, 145715, 145759, 145781, 14582...  
 
 
-We want more just that players and how many times that player matched that condition. Like a dog hankering for a fresh bone, I can feel you chomping at the bit to get the real stats. We want to get the *actual* innings that the player achieved. That's what that `indexes` column is for. It's a list of the indivdidual indexes from the original dataset so we can look them up later. Let's write a function that does the whole thing, and returns the innings for only the maximum results.
+We want more just that players and how many times that player matched that condition. Like a dog hankering for a fresh bone, I can feel you chomping at the bit to get the real stats. We want to get the *actual* innings that the player where they match the query. That's what that `indexes` column is for. It's a list of the indivdidual indexes from the original dataset so we can look them up later. Let's write a function that does the whole thing, and returns the innings for only the maximum results.
 
 
 ```python
@@ -546,7 +546,7 @@ print(results.head(10)['maximum'])
 Ooh ahh, Glenn McGrath. 
 
 
-Okay, now we want to apply our data to *team scores* not just individuals.W ell, the data we downloaded did not have all the indvidual team innings, unfortunately. But the data does exist on statsguru. So, I've modified a scraper that I found online to download the data. You can check out [my repo here](https://github.com/obrasier/statsguru-scraper)
+Okay, now we want to apply our data to *team scores* not just individuals. Well, the data we downloaded did not have all the indvidual team innings, unfortunately. But the data does exist on statsguru. So, I've modified a scraper that I found online to download the data. You can check out [my repo here](https://github.com/obrasier/statsguru-scraper)
 
 Here's the relevent part:
 
@@ -568,6 +568,9 @@ values.insert(2, runs)
 Some of the balls per over was not 6, but is says when it wasn't. So I added a `balls_per_over` so it's possible to calculate the number of deliveries in each innings if needed.
 
 ```python
+# value looks like 50x8 < 50 8 ball overs
+# split by the x, and part before is the number over overs
+# the part after is the balls per over.
 overs_and_balls = values[2].split('x')
 values[2] = overs_and_balls[0]
 balls_per_over = 6
